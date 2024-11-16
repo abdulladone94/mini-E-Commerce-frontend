@@ -43,6 +43,7 @@ export default function FavouriteProducts() {
   return (
     <>
       <PageHeader title="FAVOURITE PRODUCTS" />
+      <PageTable />;
     </>
   );
 }
