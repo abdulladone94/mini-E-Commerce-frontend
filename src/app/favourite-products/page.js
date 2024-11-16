@@ -1,9 +1,5 @@
-"use client";
 import PageTable from "@/components/pageTable";
 import PageHeader from "@/components/pageHeader";
-import { Provider } from "react-redux";
-import { useRef } from "react";
-import { makeStore } from "@/store/store";
 
 const products = [
   {
@@ -43,16 +39,11 @@ const products = [
   },
 ];
 
-export default function Products() {
-  const storeRef = useRef();
-  if (!storeRef.current) {
-    // Create the store instance the first time this renders
-    storeRef.current = makeStore();
-  }
+export default function FavouriteProducts() {
   return (
-    <Provider store={storeRef.current}>
-      <PageHeader title="PRODUCTS" />
+    <>
+      <PageHeader title="FAVOURITE PRODUCTS" />
       <PageTable />;
-    </Provider>
+    </>
   );
 }
