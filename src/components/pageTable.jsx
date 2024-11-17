@@ -11,9 +11,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
+import { deleteProduct } from "@/store/reducers/products/products.slice";
+import { useDispatch } from "react-redux";
 
 export default function PageTable({ posts, status, error }) {
+  const dispatch = useDispatch();
   console.log(posts);
+
+  const handleDelete = async (id) => {
+    if (confirm("Are you sure you want to delete this product?")) {
+      try {
+        await dispatch(deleteProduct(id)); // Deletes product
+        // Optional: Dispatch fetchProducts() if needed for full refresh
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+      }
+    }
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -58,7 +72,13 @@ export default function PageTable({ posts, status, error }) {
                 <TableCell className="text-right">${post.price}</TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <Button variant="ghost" size="icon">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        handleDelete(post._id);
+                      }}
+                    >
                       <Trash2 className="w-5 h-5 text-[#001EB9]" />
                     </Button>
                     <Button variant="ghost" size="icon">

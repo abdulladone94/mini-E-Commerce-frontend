@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   a: 0,
@@ -15,6 +16,19 @@ export const fetchProducts = createAsyncThunk(
     const data = await response.json();
     console.log("Fetched Posts:", data); // Logs the fetched data
     return data; // Pass data to the fulfilled action
+  }
+);
+
+// Async thunk for deleting a product
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8800/api/products/${id}`); // Adjust the endpoint as necessary
+      return id; // Return the deleted product ID
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -36,11 +50,17 @@ export const counterSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.posts = action.payload; // Store the fetched posts
+        state.posts = action.payload; // Update the fetched posts
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message; // Store error message
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.posts = state.posts.filter((post) => post._id !== action.payload); // Remove deleted product
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });
