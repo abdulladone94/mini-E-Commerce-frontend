@@ -1,49 +1,8 @@
-import { Search, Star, Trash2, PenSquare } from "lucide-react";
+import { Search, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import Products from "@/app/page";
-import { setAllProducts } from "@/store/reducers/products/products.slice";
-import { useDispatch, useSelector } from "react-redux";
-
-const products = [
-  {
-    sku: "#CA25",
-    image: "/placeholder.svg?height=80&width=80",
-    name: "Product-name",
-    price: 24.0,
-    isFavorite: true,
-  },
-  {
-    sku: "#CA34",
-    image: "/placeholder.svg?height=80&width=80",
-    name: "Product-name",
-    price: 24.0,
-    isFavorite: false,
-  },
-  {
-    sku: "#CA35",
-    image: "/placeholder.svg?height=80&width=80",
-    name: "Product-name",
-    price: 24.0,
-    isFavorite: true,
-  },
-  {
-    sku: "#CA56",
-    image: "/placeholder.svg?height=80&width=80",
-    name: "Product-name",
-    price: 24.0,
-    isFavorite: false,
-  },
-  {
-    sku: "#CA57",
-    image: "/placeholder.svg?height=80&width=80",
-    name: "Product-name",
-    price: 24.0,
-    isFavorite: false,
-  },
-];
 
 export default function PageHeader({ title }) {
   return (
