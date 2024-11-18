@@ -4,6 +4,8 @@ import axios from "axios";
 const initialState = {
   a: 0,
   posts: [], // To store fetched posts
+  filteredPosts: [], // To store posts after filtering by search
+  searchQuery: "", // To store the search query
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null, // To store error messages
 };
@@ -42,6 +44,18 @@ export const counterSlice = createSlice({
     decrement: (state) => {
       state.a -= 1;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+      // Filter posts based on the search query
+      state.filteredPosts = state.posts.filter(
+        (post) =>
+          post.productName
+            .toLowerCase()
+            .includes(action.payload.toLowerCase()) ||
+          post.sku.toLowerCase().includes(action.payload.toLowerCase()) ||
+          post.price.toString().includes(action.payload.toLowerCase())
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -51,6 +65,7 @@ export const counterSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.posts = action.payload; // Update the fetched posts
+        state.filteredPosts = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
@@ -58,6 +73,12 @@ export const counterSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.posts = state.posts.filter((post) => post._id !== action.payload); // Remove deleted product
+        // Re-filter posts based on the current search query after a delete
+        state.filteredPosts = state.posts.filter((post) =>
+          post.productName
+            .toLowerCase()
+            .includes(state.searchQuery.toLowerCase())
+        );
       })
       .addCase(deleteProduct.rejected, (state, action) => {
         state.error = action.payload;
@@ -65,5 +86,5 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement } = counterSlice.actions;
+export const { increment, decrement, setSearchQuery } = counterSlice.actions;
 export default counterSlice.reducer;

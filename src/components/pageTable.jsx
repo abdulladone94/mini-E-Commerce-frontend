@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { deleteProduct } from "@/store/reducers/products/products.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PageTable({ posts, status, error }) {
   const dispatch = useDispatch();
+  const { filteredPosts } = useSelector((state) => state.product);
   console.log(posts);
 
   const handleDelete = async (id) => {
@@ -53,7 +54,7 @@ export default function PageTable({ posts, status, error }) {
         </TableHeader>
         <TableBody>
           {status === "succeeded" &&
-            posts.map((post) => (
+            filteredPosts.map((post) => (
               <TableRow key={post._id}>
                 <TableCell className="font-medium text-muted-foreground">
                   {post.sku}
