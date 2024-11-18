@@ -34,19 +34,21 @@ export default function PageHeader({ title }) {
             onClick={handleSearchClick}
           >
             <Search className="w-5 h-5 mr-2" />
-            Search
+            <span className="hidden md:block ml-2 bg-[#001EB9] hover:bg-blue-500">
+              Search
+            </span>
           </Button>
         </div>
         <div className="flex gap-2">
           <Link
             href="/add-new-product"
-            className="flex flex-1 w-[250px] sm:flex-none justify-center items-center bg-[#001EB9] rounded-lg text-white text-sm hover:bg-blue-500"
+            className="flex flex-1  md:w-[250px] sm:flex-none justify-center items-center bg-[#001EB9] rounded-lg text-white text-sm hover:bg-blue-500"
           >
             New Product
           </Link>
           <Link
             href="/favourite-products"
-            className="py-6 flex flex-1 w-[50px] sm:flex-none justify-center items-center bg-[#001EB9] rounded-lg text-white text-sm hover:bg-blue-500"
+            className="py-6 flex flex-1  md:w-[50px] sm:flex-none justify-center items-center bg-[#001EB9] rounded-lg text-white text-sm hover:bg-blue-500"
             variant="outline"
           >
             <Star className="w-5 h-5 fill-[#001EB9] border-[#001EB9]" />
